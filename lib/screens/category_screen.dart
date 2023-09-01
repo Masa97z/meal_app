@@ -10,12 +10,17 @@ class CatehoryScreen extends StatelessWidget {
   const CatehoryScreen({super.key,
   required this.onToggleFaveriote,
     required this.onSelectScreen,
+    required this.availableMeal ,
+
   });
+
+  final List <Meal> availableMeal ;
+
   final void Function(String identifire) onSelectScreen;
   final void Function(Meal meal) onToggleFaveriote;
 
   void _onSelectCategory(BuildContext context, Category catrgory) {
-    final felteredMeals = dummyMeals
+    final felteredMeals = availableMeal
         .where(
           (meal) => meal.categories.contains(catrgory.id),
         )
