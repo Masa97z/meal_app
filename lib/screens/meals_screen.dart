@@ -8,15 +8,13 @@ class MealsScreen extends StatelessWidget {
     super.key,
     required this.title,
     required this.meals,
-    required this.onToggleFaveriote,
   });
-  final void Function(Meal meal) onToggleFaveriote;
   final String title;
   final List<Meal> meals;
 
   void _detelScreen(BuildContext context, Meal meal) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => DetelScreen(meal: meal,onToggleFaveriote: onToggleFaveriote,)));
+        .push(MaterialPageRoute(builder: (ctx) => DetelScreen(meal: meal,)));
   }
 
   @override

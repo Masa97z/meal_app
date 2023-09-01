@@ -8,7 +8,6 @@ import 'package:meal_app/widgets/main_drwar.dart';
 
 class CatehoryScreen extends StatelessWidget {
   const CatehoryScreen({super.key,
-  required this.onToggleFaveriote,
     required this.onSelectScreen,
     required this.availableMeal ,
 
@@ -17,7 +16,6 @@ class CatehoryScreen extends StatelessWidget {
   final List <Meal> availableMeal ;
 
   final void Function(String identifire) onSelectScreen;
-  final void Function(Meal meal) onToggleFaveriote;
 
   void _onSelectCategory(BuildContext context, Category catrgory) {
     final felteredMeals = availableMeal
@@ -31,7 +29,6 @@ class CatehoryScreen extends StatelessWidget {
         builder: (ctx) => MealsScreen(
           title: catrgory.title,
           meals: felteredMeals,
-          onToggleFaveriote: onToggleFaveriote,
         ),
       ),
     );
