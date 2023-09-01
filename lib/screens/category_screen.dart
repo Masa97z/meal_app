@@ -4,11 +4,14 @@ import 'package:meal_app/models/category.dart';
 import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/meals_screen.dart';
 import 'package:meal_app/widgets/category_grid_item.dart';
+import 'package:meal_app/widgets/main_drwar.dart';
 
 class CatehoryScreen extends StatelessWidget {
   const CatehoryScreen({super.key,
   required this.onToggleFaveriote,
+    required this.onSelectScreen,
   });
+  final void Function(String identifire) onSelectScreen;
   final void Function(Meal meal) onToggleFaveriote;
 
   void _onSelectCategory(BuildContext context, Category catrgory) {
@@ -35,6 +38,7 @@ class CatehoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('pick your category'),
       ),
+      drawer:  MainDrawer(onSelectScreen: onSelectScreen),
       body: GridView(
         padding: const EdgeInsets.all(16),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

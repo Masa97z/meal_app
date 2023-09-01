@@ -3,6 +3,7 @@ import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/category_screen.dart';
 import 'package:meal_app/screens/faverote_screen.dart';
 import 'package:meal_app/screens/meals_screen.dart';
+import 'package:meal_app/widgets/main_drwar.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -45,20 +46,29 @@ class _TabsScreenState extends State<TabsScreen> {
       }
     });
   }
+  void setScreen(String identifire){
+    if (identifire == 'filter'){
+
+    }else {
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     Widget activeScreen = CatehoryScreen(
       onToggleFaveriote: _toggleMealFaveiroteState,
+      onSelectScreen: setScreen,
     );
     if (_selectedIndex == 1) {
       activeScreen = MealsScreen(
-        title: "Faverate",
+        title: "Faverite",
         meals: _faverote,
         onToggleFaveriote: _toggleMealFaveiroteState,
       );
     }
     return Scaffold(
+
       body: activeScreen,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
