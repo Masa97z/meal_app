@@ -6,19 +6,45 @@ import 'package:meal_app/screens/meals_screen.dart';
 import 'package:meal_app/widgets/category_grid_item.dart';
 import 'package:meal_app/widgets/main_drwar.dart';
 
-class CatehoryScreen extends StatelessWidget {
-  const CatehoryScreen({super.key,
+class CatehoryScreen extends StatefulWidget {
+  const CatehoryScreen({
+    super.key,
     required this.onSelectScreen,
-    required this.availableMeal ,
-
+    required this.availableMeal,
   });
 
-  final List <Meal> availableMeal ;
+  final List<Meal> availableMeal;
 
   final void Function(String identifire) onSelectScreen;
 
+  @override
+  State<CatehoryScreen> createState() => _CatehoryScreenState();
+}
+
+class _CatehoryScreenState extends State<CatehoryScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 250),
+      lowerBound: 0,
+      upperBound: 1,
+    );
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   void _onSelectCategory(BuildContext context, Category catrgory) {
-    final felteredMeals = availableMeal
+    final felteredMeals = widget.availableMeal
         .where(
           (meal) => meal.categories.contains(catrgory.id),
         )
@@ -40,30 +66,35 @@ class CatehoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('pick your category'),
       ),
-      drawer:  MainDrawer(onSelectScreen: onSelectScreen),
-      body: GridView(
-        padding: const EdgeInsets.all(16),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 24),
-        children: [
-          // availableCategories.map(
-          //         (category)=> CatrgoryItem(category: category)
-          // ).toList(),
-          for (final category in availableCategories)
-            CatrgoryItem(
-              category: category,
-              onSelect: () {
-                _onSelectCategory(
-                  context,
-                  category,
-                );
-              },
-            )
-        ],
-      ),
+      drawer: MainDrawer(onSelectScreen: widget.onSelectScreen),
+      body: AnimatedBuilder(
+          animation: _animationController,
+          child: GridView(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 3 / 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 24),
+            children: [
+              for (final category in availableCategories)
+                CatrgoryItem(
+                  category: category,
+                  onSelect: () {
+                    _onSelectCategory(
+                      context,
+                      category,
+                    );
+                  },
+                )
+            ],
+          ),
+          builder: (context, child) {
+            return Padding(
+              padding: EdgeInsets.only(top: 100- _animationController.value*100),
+              child: child,
+            );
+          }),
     );
   }
 }
