@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/data/dummy_data.dart';
 import 'package:meal_app/models/category.dart';
+import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/meals_screen.dart';
 import 'package:meal_app/widgets/category_grid_item.dart';
 
 class CatehoryScreen extends StatelessWidget {
-  const CatehoryScreen({super.key});
+  const CatehoryScreen({super.key,
+  required this.onToggleFaveriote,
+  });
+  final void Function(Meal meal) onToggleFaveriote;
 
   void _onSelectCategory(BuildContext context, Category catrgory) {
     final felteredMeals = dummyMeals
@@ -19,6 +23,7 @@ class CatehoryScreen extends StatelessWidget {
         builder: (ctx) => MealsScreen(
           title: catrgory.title,
           meals: felteredMeals,
+          onToggleFaveriote: onToggleFaveriote,
         ),
       ),
     );
